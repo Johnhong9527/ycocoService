@@ -160,7 +160,7 @@ function init() {
     event.stopPropagation();
     var request = new XMLHttpRequest();
     // var name = '?name=seamong';
-    request.open('GET', 'http://localhost:3000/form', true);
+    request.open('GET', '/form', true);
     request.send(null);
     request.onreadystatechange = function () {
       if (request.readyState === 4) {
