@@ -146,7 +146,7 @@ function init() {
     if (!deBug) {
       return;
     }
-    console.log('deBug')
+    // console.log('deBug');
     let cLog = document.getElementById('cLog'); // 错误信息加载
 
     if (deBug) {
@@ -155,6 +155,25 @@ function init() {
     /*debug*/
     // cLog.innerHTML
   }
+
+  document.getElementById('btnAjax').addEventListener('click', function (event) {
+    event.stopPropagation();
+    var request = new XMLHttpRequest();
+    // var name = '?name=seamong';
+    request.open('GET', 'http://localhost:3000/form', true);
+    request.send(null);
+    request.onreadystatechange = function () {
+      if (request.readyState === 4) {
+        if (request.status === 200) {
+          console.log(JSON.parse(request.response));
+          document.getElementById('newContent').innerHTML = `<h1>${JSON.parse(request.response)[0].name}</h1>`;
+          return;
+        } else {
+          console.log('请求失败!');
+        }
+      }
+    }
+  }, false);
 }
 
 
