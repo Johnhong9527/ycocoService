@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+// mongodb
+var MongoClient = require('mongodb').MongoClient;
+
 // 全局变量
 var data = [
   {name: '123', num: 12},
@@ -11,10 +14,20 @@ var data = [
 router.get('/', function (req, res, next) {
   res.render('index', {title: 'Express'});
 });
-
 router.get('/form', function (req, res) {
-  res.send(data);
-  return;
+  MongoClient.connect('mongodb://db.ycoco.xyz/ycoco', function(err, db) {
+    if (err) {
+      throw err;
+    }
+    db.collection('ycoco').find().toArray(function(err, result) {
+      if (err) {
+        throw err;
+      }
+      // console.log(result);
+      res.send(result);
+    });
+  });
+  // res.send(data);
 });
 router.post('/date', function (req, res) {
   res.set({
