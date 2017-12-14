@@ -13,7 +13,7 @@ router.get('/form', function (req, res) {
   ];
   res.set({
   'Content-Type': 'application/x-www-form-urlencoded',
-  'Access-Control-Allow-Origin': 'http://localhost:8080',
+  'Access-Control-Allow-Origin': 'http://ycoco.xyz',
 });
   // console.log(JSON.stringify(req.query))
   res.json(data);
