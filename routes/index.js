@@ -1,24 +1,19 @@
 var express = require('express');
 var router = express.Router();
+// 全局变量
+var data = [
+  {name: '123', num: 12},
+  {name: '123', num: 12},
+  {name: '123', num: 12},
+  {name: '123', num: 12}
+];
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', {title: 'Express'});
 });
 
-// 跨域
 router.get('/form', function (req, res) {
-  var data = [
-    {name: '123', num: 12},
-    {name: '123', num: 12},
-    {name: '123', num: 12},
-    {name: '123', num: 12}
-  ];
-  //   res.set({
-  //   'Content-Type': 'application/x-www-form-urlencoded',
-  //   'Access-Control-Allow-Origin': 'http://ycoco.xyz',
-  // });
-  // console.log(JSON.stringify(req.query))
-  res.json(data);
+  res.send(data);
   return;
 });
 router.post('/date', function (req, res) {
@@ -26,7 +21,7 @@ router.post('/date', function (req, res) {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Access-Control-Allow-Origin': 'http://ycoco.xyz',
   });
-  res.jsonp('ok');
+  res.send(data);
 })
 
 module.exports = router;
