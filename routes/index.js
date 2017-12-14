@@ -14,7 +14,7 @@ router.get('/form', function (req, res) {
   res.set({
   'Content-Type': 'application/x-www-form-urlencoded',
   'Content-Length': '123',
-  'Access-Control-Allow-Origin': 'http://api.ycoco.xyz/form',
+  'Access-Control-Allow-Origin': 'http://api.ycoco.xyz',
   'ETag': '12345'
 });
   // console.log(JSON.stringify(req.query))
