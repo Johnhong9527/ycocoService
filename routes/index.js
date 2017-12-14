@@ -15,7 +15,7 @@ router.get('/', function (req, res, next) {
   res.render('index', {title: 'Express'});
 });
 router.get('/form', function (req, res) {
-  MongoClient.connect('mongodb://localhost:27017/ycoco', function(err, db) {
+  MongoClient.connect('mongodb://127.0.0.1:27017/ycoco', function(err, db) {
     if (err) {
       throw err;
     }
