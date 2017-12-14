@@ -11,6 +11,12 @@ router.get('/form', function (req, res) {
     {name: '123', num: 12},
     {name: '123', num: 12}
   ];
+  res.set({
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Content-Length': '123',
+  'Access-Control-Allow-Origin': 'http://api.ycoco.xyz/form',
+  'ETag': '12345'
+});
   // console.log(JSON.stringify(req.query))
   res.json(data);
   return;
