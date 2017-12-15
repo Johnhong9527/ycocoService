@@ -1,0 +1,31 @@
+1.后台数据处理 ok
+2.ajax数据请求返回 ok
+3.安全：
+  https://cnodejs.org/topic/56f3b0e8dd3dade17726fe85
+  选择安全稳定的运行版本
+  使用TLS加密数据的传输
+  使用Helmet
+  安全的使用会话Cookie
+  确保依赖库的安全性
+  额外需要考虑的问题
+    https://www.npmjs.com/package/express-limiter
+  避免已知的漏洞攻击
+    https://nodesecurity.io/advisories
+4.SSL证书申请
+  https://letsencrypt.org/
+  https://certbot.eff.org/#ubuntuxenial-nginx
+5.
+
+admin
+  登录
+  markdown编辑 数据存储
+    https://github.com/chjj/marked
+    https://www.npmjs.com/package/markdown
+    https://www.npmjs.com/package/markdown-it
+  注册
+    权限: 权级划分
+      总管理员
+        用户注册通过
+        用户评论
+        用户文章发布审核
+      注册
