@@ -23,7 +23,7 @@ router.get('/form', function (req, res) {
       if (err) {
         throw err;
       }
-      thatRes(result);
+      return thatRes(result);
     });
   });
   // res.send(data);
