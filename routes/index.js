@@ -7,9 +7,9 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient,
 assert = require('assert');
 // Connection URL
-const url = 'mongodb://127.0.0.1:27017/ycoco';
+var url = 'mongodb://127.0.0.1:27017/ycoco';
 // Database Name
-const dbName = 'ycoco';
+var dbName = 'ycoco';
 // 全局变量
 var data = [
   {name: '123', num: 12},
@@ -34,27 +34,18 @@ router.get('/form', function (req, res) {
   //   });
   // });
 
-  var findDocuments = function(db, callback) {
-    // Get the documents collection
-    var collection = db.collection('documents');
-    // Find some documents
-    collection.find({}).toArray(function(err, docs) {
-      assert.equal(err, null);
-      console.log("Found the following records");
-      console.log(docs)
-      callback(docs);
-    });
-  }
   // Use connect method to connect to the server
   MongoClient.connect(url, function(err, client) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
     var db = client.db(dbName);
-    insertDocuments(db, function() {
-      findDocuments(db, function() {
-        client.close();
-      });
-    });
+    db.collection('ycoco').find().toArray(function (err, result){
+      if(err) {
+        throw err;
+      }
+      console.log("成功赋值！");
+      thatRes = result;
+    })
   });
 
   setTimeout(function () {
