@@ -16,17 +16,19 @@ router.get('/', function (req, res, next) {
   res.render('index', {title: 'Express'});
 });
 router.get('/form', function (req, res) {
-  var thatRes = res;
+  var thatRes = null;
   MongoClient.connect(DB_BOOKS, function(err, db) {
     console.log("连接成功！");
     db.collection('ycoco').find().toArray(function(err, result) {
       if (err) {
         throw err;
       }
-      return thatRes(result);
+      thatRes = result;
     });
   });
-  // res.send(data);
+  if(thatRes) {
+    res.send(data);
+  }
 });
 router.post('/date', function (req, res) {
   res.set({
