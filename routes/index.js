@@ -49,7 +49,7 @@ router.get('/form', function (req, res) {
   });
 
   setTimeout(function () {
-    res.send('ok');
+    res.send(thatRes);
   }, 300);
 });
 router.post('/date', function (req, res) {
