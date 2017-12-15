@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-// mongodb
+// mongodb  "mongodb": "2.2.33",
 // var MongoClient = require('mongodb').MongoClient;
 // var DB_BOOKS = 'mongodb://127.0.0.1:27017/ycoco'; // 数据库
 // getting-started.js
