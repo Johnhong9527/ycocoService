@@ -23,12 +23,13 @@ router.get('/form', function (req, res) {
       if (err) {
         throw err;
       }
+      console.log("成功赋值！");
       thatRes = result;
     });
   });
-  if(thatRes) {
-    res.send(data);
-  }
+  setTimeout(function () {
+    res.send(thatRes);
+  }, 300);
 });
 router.post('/date', function (req, res) {
   res.set({
