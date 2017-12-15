@@ -16,13 +16,14 @@ router.get('/', function (req, res, next) {
   res.render('index', {title: 'Express'});
 });
 router.get('/form', function (req, res) {
+  var thatRes = res;
   MongoClient.connect(DB_BOOKS, function(err, db) {
     console.log("连接成功！");
     db.collection('ycoco').find().toArray(function(err, result) {
       if (err) {
         throw err;
       }
-      res(result);
+      thatRes(result);
     });
   });
   // res.send(data);
