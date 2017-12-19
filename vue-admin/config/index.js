@@ -10,7 +10,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api':{
+        target:'http://localhost:3000', //要跨域访问的API域名
+        rewrite:function (req) {
+          //可以用正則方式替代掉，這樣往後 /api/xxx/xxx 之類的網址，就會自動匹配了
+          req.url = req.url.replace(/^\/api/,'');
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -20,10 +28,10 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
-     * Source Maps
-     */
+    * Source Maps
+    */
 
     // https://webpack.js.org/configuration/devtool/#development
     devtool: 'eval-source-map',
@@ -51,8 +59,8 @@ module.exports = {
     assetsPublicPath: '/',
 
     /**
-     * Source Maps
-     */
+    * Source Maps
+    */
 
     productionSourceMap: true,
     // https://webpack.js.org/configuration/devtool/#production
