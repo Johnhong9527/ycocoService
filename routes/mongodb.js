@@ -26,6 +26,7 @@ module.exports = {
   },
   // 添加数据
   insert:function (collectionName,document,callback) {
+    // 先去重，再插入数据
     this.find(collectionName,document.name,function(result){
       if(result.length !== 0){
         callback('您已提交过信息！');
@@ -37,17 +38,7 @@ module.exports = {
           var col = db.collection(collectionName);
           // Insert a bunch of documents
           col.insert(document,function(err, result) {
-            callback(result.ok);
-            assert.equal(null, err);
-            // Show that duplicate records got dropped
-            col.find(document.name).toArray(function(err, items) {
-              if(items.length !== 1){
-                callback('提交失败');
-              } else {
-                callback(result);
-              }
-              client.close();
-            });
+            callback(result.result);
           });
         });
       }
