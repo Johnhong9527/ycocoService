@@ -48,6 +48,5 @@ module.exports = {
   },
   // 更新数据
   Update:function () {
-
   }
 }
