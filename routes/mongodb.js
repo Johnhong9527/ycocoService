@@ -37,13 +37,17 @@ module.exports = {
       }
       MongoClient.connect(url, function(err, client) {
         var db = client.db(dbName);
-        // 创建一个我们想稍后放下的集合
+        // 创建一个我们想稍后添加数据的集合
         var col = db.collection(collectionName);
-        // 插入一堆文件
+        // 在集合中添加数据
         col.insert(document,function(err, result) {
           callback(result.result);
         });
       });
     })
+  },
+  // 更新数据
+  Update:function () {
+
   }
 }
