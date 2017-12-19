@@ -18,13 +18,32 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 跨域
 app.all('*',function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://ycoco.xyz');
+  // console.log(req.headers.origin)
+
+
+  // 判断origin是否在域名白名单列表中
+  function isOriginAllowed(origin) {
+    const ALLOW_ORIGIN = [  // 域名白名单
+      'http://*.ycoco.xyz',
+      'http://www.ycoco.xyz',
+      'http://localhost:8080',
+      'http://localhost:4200',
+      'http://localhost:3000'
+    ];
+    let originS = ALLOW_ORIGIN[0]; // 设置默认域名白名单
+    if(ALLOW_ORIGIN.indexOf(origin) !== -1){
+      originS = origin
+    }
+    return originS;
+  }
+
+  res.header('Access-Control-Allow-Origin', isOriginAllowed(req.headers.origin));
   res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE,OPTIONS');
   if (req.method == 'OPTIONS') {
@@ -32,6 +51,7 @@ app.all('*',function (req, res, next) {
   }
   else {
     next();
+    // res.send({ code: -2, msg: '非法请求' });
   }
 });
 

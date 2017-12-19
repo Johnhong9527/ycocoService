@@ -13,13 +13,9 @@ module.exports = {
     proxyTable: {
       '/api':{
         target:'http://localhost:3000', //要跨域访问的API域名
-        rewrite:function (req) {
-          //可以用正則方式替代掉，這樣往後 /api/xxx/xxx 之類的網址，就會自動匹配了
-          req.url = req.url.replace(/^\/api/,'');
-        }
+        changeOrigin: true
       }
     },
-
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined

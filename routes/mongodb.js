@@ -28,7 +28,7 @@ module.exports = {
   insert:function (collectionName,document,callback) {
     // 先去重，再插入数据
     this.find(collectionName,document.name,function(result){
-      if(result.length !== 0){
+      if(result.length >= 1){
         callback('您已提交过信息！');
       } else {
         // Connect using MongoClient

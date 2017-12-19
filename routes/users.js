@@ -1,5 +1,6 @@
 var db = require('./mongodb');
 var express = require('express');
+var URL = require('url');
 var router = express.Router();
 
 /* GET users listing. */
@@ -11,10 +12,13 @@ router.get('/', function(req, res, next) {
   })
 });
 /*insert*/
-router.get('/insert',function (req,res,next) {
-  db.insert('user',{'name':'seam','password':'rkns$3sx.q'},function(result){
+router.post('/insert',function (req,res,next) {
+    // var params = URL.parse(req.url, true).query;
+    // console.log(req.body.name);
+  db.insert('user',{'name':req.body.name,'password':req.body.password},function(result){
     // console.log(result);
     res.send(result);
+    // res.send(req1);
   })
 })
 
