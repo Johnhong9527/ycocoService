@@ -27,21 +27,23 @@ module.exports = {
   // 添加数据
   insert:function (collectionName,document,callback) {
     // 先去重，再插入数据
-    this.find(collectionName,document.name,function(result){
-      if(result.length >= 1){
-        callback('您已提交过信息！');
-      } else {
-        // Connect using MongoClient
-        MongoClient.connect(url, function(err, client) {
-          var db = client.db(dbName);
-          // Create a collection we want to drop later
-          var col = db.collection(collectionName);
-          // Insert a bunch of documents
-          col.insert(document,function(err, result) {
-            callback(result.result);
-          });
-        });
+    console.log(JSON.stringify({"name":document.name}));
+    this.find(collectionName,JSON.stringify({"name":document.name}),function(result){
+      // 去重
+      for(let i in result){
+        if(result[i].name === document.name){
+          return callback('您已提交过信息！');
+        }
       }
+      MongoClient.connect(url, function(err, client) {
+        var db = client.db(dbName);
+        // 创建一个我们想稍后放下的集合
+        var col = db.collection(collectionName);
+        // 插入一堆文件
+        col.insert(document,function(err, result) {
+          callback(result.result);
+        });
+      });
     })
   }
 }
