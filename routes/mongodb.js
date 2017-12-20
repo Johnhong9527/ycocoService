@@ -13,23 +13,26 @@ module.exports = {
   find:function (collectionName,condition,callback) {
     // Use connect method to connect to the server
     MongoClient.connect(url, function(err, client) {
-      assert.equal(null, err);
       // console.log("Connected successfully to server");
       var db = client.db(dbName);
-      db.collection(collectionName).findOne({
-        "name":condition.name
-      },function (err, result){
+      console.log('18:'+condition)
+      db.collection(collectionName).findOne(condition,function (err, result){
         if(err) {
           throw err;
         }
-        callback(result);
+        if(result === null){
+          callback('登录信息填入错误');
+        } else {
+          callback(result);
+        }
+
       })
     });
   },
-  // 添加数据
+  // 注册
   insert:function (collectionName,document,callback) {
     // 先去重，再插入数据
-    this.find(collectionName,document,function(result){
+    this.find(collectionName,{"name":document.name},function(result){
       // 去重
       if(result !== null){
         return callback('请勿重复提交注册信息！');
