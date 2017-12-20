@@ -16,7 +16,9 @@ module.exports = {
       assert.equal(null, err);
       // console.log("Connected successfully to server");
       var db = client.db(dbName);
-      db.collection(collectionName).find(condition).toArray(function (err, result){
+      db.collection(collectionName).findOne({
+        "name":condition.name
+      },function (err, result){
         if(err) {
           throw err;
         }
@@ -27,23 +29,21 @@ module.exports = {
   // 添加数据
   insert:function (collectionName,document,callback) {
     // 先去重，再插入数据
-    console.log(JSON.stringify({"name":document.name}));
-    this.find(collectionName,JSON.stringify({"name":document.name}),function(result){
+    this.find(collectionName,document,function(result){
       // 去重
-      for(let i in result){
-        if(result[i].name === document.name){
-          return callback('您已提交过信息！');
-        }
-      }
-      MongoClient.connect(url, function(err, client) {
-        var db = client.db(dbName);
-        // 创建一个我们想稍后添加数据的集合
-        var col = db.collection(collectionName);
-        // 在集合中添加数据
-        col.insert(document,function(err, result) {
-          callback(result.result);
+      if(result !== null){
+        return callback('请勿重复提交注册信息！');
+      } else {
+        MongoClient.connect(url, function(err, client) {
+          var db = client.db(dbName);
+          // 创建一个我们想稍后添加数据的集合
+          var col = db.collection(collectionName);
+          // 在集合中添加数据
+          col.insert(document,function(err, res) {
+            callback(res.result);
+          });
         });
-      });
+      }
     })
   },
   // 更新数据
