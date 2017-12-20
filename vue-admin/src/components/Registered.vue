@@ -16,6 +16,11 @@
     <button type="button" name="button" @click='signInBtn'>登录</button>
     <button type="button" name="button" @click='updateBtn'>修改</button>
     <button type="button" name="button" @click='deleteBtn'>删除</button>
+    <hr>
+    <h4>cookie</h4>
+    <div class="cookie">
+      <button type="button" name="button" @click='cookieBtn'>cookie</button>
+    </div>
   </div>
 </template>
 
@@ -85,6 +90,7 @@ export default {
         })
       }
     },
+    // 删除用户数据
     deleteBtn:function (){
       if(!(this.password === null || this.password.length <= 0)){
         axios.post('http://127.0.0.1:3000/users/delete-user',{
@@ -99,6 +105,11 @@ export default {
           }
         })
       }
+    },
+    cookieBtn: function(){
+      axios.get('http://127.0.0.1:3000/cookie').then(res=>{
+        console.log(res);
+      })
     }
   }
 }
