@@ -8,8 +8,14 @@
       <label>password</label>
       <input type="password" name="password" placeholder="请设置您的登录密码" v-model="password">
     </div>
+    <div class="">
+      <label>newPassword</label>
+      <input type="password" name="password" placeholder="请设置新的登录密码" v-model="newPassword">
+    </div>
     <button type="button" name="button" @click='signUpBtn'>注册</button>
     <button type="button" name="button" @click='signInBtn'>登录</button>
+    <button type="button" name="button" @click='updateBtn'>修改</button>
+    <button type="button" name="button" @click='deleteBtn'>删除</button>
   </div>
 </template>
 
@@ -20,7 +26,8 @@ export default {
   data(){
     return {
       userName:null,
-      password:null
+      password:null,
+      newPassword:null
     }
   },
   created(){},
@@ -40,7 +47,8 @@ export default {
           }
         })
       } else {
-        alert('登录信息不为空')
+        console.log(!(this.password === null || this.password.length <= 0));
+        alert('登录信息不为空');
       }
     },
     // 注册
@@ -60,9 +68,37 @@ export default {
         alert('注册信息不为空')
       }
     },
-    // Update
+    // 更新数据
     updateBtn: function () {
-
+      if(!(this.password === null || this.password.length <= 0 || this.newPassword === null)){
+        axios.post('http://127.0.0.1:3000/users/update',{
+          name:this.userName,
+          password:this.password,
+          newPassword: this.newPassword
+        }).then(res=>{
+          console.log(res);
+          if(res.data === 1){
+            alert('修改成功');
+          } else {
+            alert(res.data);
+          }
+        })
+      }
+    },
+    deleteBtn:function (){
+      if(!(this.password === null || this.password.length <= 0)){
+        axios.post('http://127.0.0.1:3000/users/delete-user',{
+          name:this.userName,
+          password:this.password
+        }).then(res=>{
+          console.log(res);
+          if(res.data === 1){
+            alert('删除成功');
+          } else {
+            alert(res.data);
+          }
+        })
+      }
     }
   }
 }
