@@ -107,7 +107,7 @@ export default {
       }
     },
     cookieBtn: function(){
-      axios.get('http://127.0.0.1:3000/cookie').then(res=>{
+      axios.get('/cookie').then(res=>{
         console.log(res);
       })
     }
