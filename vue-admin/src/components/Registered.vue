@@ -35,7 +35,9 @@ export default {
       newPassword:null
     }
   },
-  created(){},
+  created(){
+    this.cookieBtn();
+  },
   methods:{
     // 登入
     signInBtn:function () {
@@ -107,7 +109,7 @@ export default {
       }
     },
     cookieBtn: function(){
-      axios.get('/cookie').then(res=>{
+      axios.get('/api/form').then(res=>{
         console.log(res);
       })
     }

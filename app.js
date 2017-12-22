@@ -2,16 +2,24 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser')
-
+// 首先引入 cookie-parser 这个模块
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+// 引入路由
 var index = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
 
 var app = express();
-
+app.use(cookieParser());
+app.use(session({
+  'secret': 'ruidoc',     // 签名，与上文中cookie设置的签名字符串一致，
+  'cookie': {
+    'maxAge': 9000
+  },
+  'name': 'session_id'    // 在浏览器中生成cookie的名称key，默认是connect.sid
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -21,45 +29,16 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 // cookie
-app.get('/', function (req, res) {
-  // 如果请求中的 cookie 存在 isVisit, 则输出 cookie
-  // 否则，设置 cookie 字段 isVisit, 并设置过期时间为1分钟
-  console.log(req.cookies)
-  if (req.cookies.isVisit) {
-    console.log(req.cookies);
-    res.send('“再次欢迎访问”');
-  } else {
-    res.cookie('name', 'loginname', {maxAge:600000, httpOnly:true, path:'/', secure:true});
-    res.send('“欢迎第一次访问”');
-  }
-});
-
-
-// app.all('/cookie',function (req,res,next) {
-//
-//   res.cookie('isLogin', 1, { expires: new Date(Date.now() + 10000 * 60 * 60 * 24 * 7) });
-//   res.send({success: true, msg: '登录成功'});
-//   return;
-//   console.log(JSON.stringify(req.header));
-//   // cookie
-//   // 如果请求中的 cookie 存在 isVisit, 则输出 cookie
-//   // 否则，设置 cookie 字段 isVisit, 并设置过期时间为1分钟
-//   if (req.cookies.isVisit) {
-//     console.log(req.cookies);
-//     res.send("再次欢迎访问");
-//   } else {
-//     res.cookie('isVisit', 1, {maxAge: 60 * 1000});
-//     res.send("欢迎第一次访问");
-//   }
-//   // Cookies that have not been signed
-//   console.log('Cookies: ', req.cookies)
-//   // Cookies that have been signed
-//   console.log('Signed Cookies: ', req.signedCookies)
-// })
-
+app.get('/', (req, res) => {
+  // 服务器接收到请求，在给响应设置一个 Cookie
+  // 这个 Cookie 的 name 为 testName
+  // value 为 testValue
+  // res.cookie('testName', 'testValue')
+  // res.send('<h1>hello world!</h1>')
+})
 
 
 // 跨域
@@ -80,8 +59,26 @@ app.all('*',function (req, res, next) {
     }
     return originS;
   }
-  // res.header('Access-Control-Allow-Origin', isOriginAllowed(req.headers.origin));
-  res.header('Access-Control-Allow-Origin', '*');
+  // cookie
+  // res.cookie('testName', 'testValue')
+  let name = 'hello';
+  //获取设置的cookie
+  var user = req.cookies.user
+  // res.cookie('user_token', name, {expires : new Date(Date.now() + 900000), httpOnly: true });
+
+  res.cookie('user', {
+    id: 1,
+    name: 'ruidoc'
+  },{
+    maxAge: 900000
+  });
+  //获取设置的cookie
+  var user = req.cookies.user
+  console.log(user)
+  //
+  // 跨域设置头部
+  res.header('Access-Control-Allow-Origin', isOriginAllowed(req.headers.origin));
+  // res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type,Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE,OPTIONS');
   if (req.method == 'OPTIONS') {
