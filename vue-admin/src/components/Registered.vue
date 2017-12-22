@@ -19,7 +19,8 @@
     <hr>
     <h4>cookie</h4>
     <div class="cookie">
-      <button type="button" name="button" @click='cookieBtn'>cookie</button>
+      <button type="button" name="button" @click='cookieAddBtn'>addCookie</button>
+      <button type="button" name="button" @click='cookieRemoveBtn'>removeCookie</button>
     </div>
   </div>
 </template>
@@ -108,8 +109,13 @@ export default {
         })
       }
     },
-    cookieBtn: function(){
-      axios.get('/api/form').then(res=>{
+    cookieAddBtn: function(){
+      axios.get('/api').then(res=>{
+        console.log(res);
+      })
+    },
+    cookieRemoveBtn: function () {
+      axios.get('/api/hello').then(res=>{
         console.log(res);
       })
     }

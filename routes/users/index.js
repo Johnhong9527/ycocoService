@@ -4,9 +4,13 @@ var URL = require('url');
 var router = express.Router();
 
 /* GET users listing. */
-router.post('/', function(req, res, next) {
+router.get('/', function(req, res, next) {
   res.send('hello!');
 });
+router.get('/hello',(req,res,next)=>{
+  console.log(11);
+  res.send('user hello!');
+})
 // 登录查询： 昵称和密码是否一致
 router.post('/sign-in',function (req,res,next) {
   // var params = URL.parse(req.url, true).query;

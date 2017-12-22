@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 // 首先引入 cookie-parser 这个模块
-var cookieParser = require('cookie-parser');
+// var cookieParser = require('cookie-parser');
 var session = require('express-session');
 // 引入路由
 var index = require('./routes/index');
@@ -12,14 +12,8 @@ var users = require('./routes/users');
 var api = require('./routes/api');
 
 var app = express();
-app.use(cookieParser());
-app.use(session({
-  'secret': 'ruidoc',     // 签名，与上文中cookie设置的签名字符串一致，
-  'cookie': {
-    'maxAge': 9000
-  },
-  'name': 'session_id'    // 在浏览器中生成cookie的名称key，默认是connect.sid
-}));
+// app.use(cookieParser());
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -30,16 +24,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-// cookie
-app.get('/', (req, res) => {
-  // 服务器接收到请求，在给响应设置一个 Cookie
-  // 这个 Cookie 的 name 为 testName
-  // value 为 testValue
-  // res.cookie('testName', 'testValue')
-  // res.send('<h1>hello world!</h1>')
-})
-
 
 // 跨域
 app.all('*',function (req, res, next) {
@@ -59,23 +43,7 @@ app.all('*',function (req, res, next) {
     }
     return originS;
   }
-  // cookie
-  // res.cookie('testName', 'testValue')
-  let name = 'hello';
-  //获取设置的cookie
-  var user = req.cookies.user
-  // res.cookie('user_token', name, {expires : new Date(Date.now() + 900000), httpOnly: true });
 
-  res.cookie('user', {
-    id: 1,
-    name: 'ruidoc'
-  },{
-    maxAge: 900000
-  });
-  //获取设置的cookie
-  var user = req.cookies.user
-  console.log(user)
-  //
   // 跨域设置头部
   res.header('Access-Control-Allow-Origin', isOriginAllowed(req.headers.origin));
   // res.header('Access-Control-Allow-Origin', '*');
@@ -93,6 +61,7 @@ app.all('*',function (req, res, next) {
 app.use('/', index);
 app.use('/users', users);
 app.use('/api', api);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
