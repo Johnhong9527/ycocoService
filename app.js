@@ -51,7 +51,7 @@ app.all('*',function (req, res, next) {
     }
     return originS;
   }
-
+  console.log(res.session);
   // 跨域设置头部
   res.header('Access-Control-Allow-Origin', isOriginAllowed(req.headers.origin));
   // res.header('Access-Control-Allow-Origin', '*');
