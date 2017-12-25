@@ -14,6 +14,7 @@
     </div>
     <button type="button" name="button" @click='signUpBtn'>注册</button>
     <button type="button" name="button" @click='signInBtn'>登录</button>
+    <button type="button" name="button" @click='signOutBtn'>登出</button>
     <button type="button" name="button" @click='updateBtn'>修改</button>
     <button type="button" name="button" @click='deleteBtn'>删除</button>
     <hr>
@@ -43,7 +44,7 @@ export default {
     // 登入
     signInBtn:function () {
       if(!(this.password === null || this.password.length <= 0)){
-        axios.post('http://127.0.0.1:3000/users/sign-in',{
+        axios.post('/users/sign-in',{
           name:this.userName,
           password:this.password
         }).then(res =>{
@@ -62,7 +63,7 @@ export default {
     // 注册
     signUpBtn: function () {
       if(!(this.password === null || this.password.length <= 0)){
-        axios.post('http://127.0.0.1:3000/users/sign-up',{
+        axios.post('/users/sign-up',{
           name:this.userName,
           password:this.password
         }).then(res =>{
@@ -76,10 +77,15 @@ export default {
         alert('注册信息不为空')
       }
     },
+    signOutBtn: function () {
+      axios.post('/users/sign-out').then(res=>{
+        console.log(res)
+      })
+    },
     // 更新数据
     updateBtn: function () {
       if(!(this.password === null || this.password.length <= 0 || this.newPassword === null)){
-        axios.post('http://127.0.0.1:3000/users/update',{
+        axios.post('/users/update',{
           name:this.userName,
           password:this.password,
           newPassword: this.newPassword
@@ -96,7 +102,7 @@ export default {
     // 删除用户数据
     deleteBtn:function (){
       if(!(this.password === null || this.password.length <= 0)){
-        axios.post('http://127.0.0.1:3000/users/delete-user',{
+        axios.post('/users/delete-user',{
           name:this.userName,
           password:this.password
         }).then(res=>{

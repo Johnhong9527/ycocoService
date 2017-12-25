@@ -11,10 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api':{
-        target:'http://localhost:3000', //要跨域访问的API域名
-        changeOrigin: true
-      }
+      // '/api':{
+      //   target:'http://localhost:3000', //要跨域访问的API域名
+      //   changeOrigin: true
+      // }
     },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

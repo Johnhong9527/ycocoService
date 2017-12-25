@@ -25,12 +25,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser('sessiontest'));
-// app.use(session({
-//   name:'UID',
-//   secret: 'sessiontest',//与cookieParser中的一致
-//   resave: true,
-//   saveUninitialized:true
-// }));
+app.use(session({
+  name:'UID',
+  secret:'ycoco.xyz.',//与cookieParser中的一致
+  cookie:{'maxAge':90000},
+  secret: 'sessiontest',
+  resave: true,
+  saveUninitialized:true
+}));
 // 跨域
 app.all('*',function (req, res, next) {
   console.log(req.cookie);
