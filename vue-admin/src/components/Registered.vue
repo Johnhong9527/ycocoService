@@ -37,7 +37,7 @@ export default {
     }
   },
   created(){
-    this.cookieBtn();
+    this.cookieAddBtn();
   },
   methods:{
     // 登入

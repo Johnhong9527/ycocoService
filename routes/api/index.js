@@ -3,33 +3,32 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
-router.use(cookieParser());
+router.use(cookieParser('ycoco.xyz.'));
 /* GET home page. */
 router.get('/', function (req, res, next) {
 
+  // 2.创建
+  res.cookie(
+    'UID',
+    {id:'ssid',pw:'ssdsasw'},
+    {
+      'maxAge': 90000, // 有效时长(毫秒)
+      'signed': true // 默认为false，表示是否签名(Boolean)
+    });
 
-  // 设置cookie名为user，值为对象，90000ms过期，无签名
-  res.cookie('user', {
-    id: 1,
-    name: 'ruidoc'
-  }, {
-    maxAge: 900000
+
+    res.send('cookie已设置成功！');
   });
+  router.get('/hello', function (req, res,next) {
+    console.log(20);
+    console.log(req.signedCookies.UID);
+    // console.log('hello')
+    // res.clearCookie('user', {id: 1,name: 'ruidoc'}, {maxAge: 900000});
+    res.send('ok');
+    // res.render('index', {title: 'Express'});
+  });
+  router.post('/date', function (req, res,next) {
+    // res.render('date', {title: 'Express'});
+  })
 
-//获取设置的cookie
-var user = req.cookies.user
-
-
-res.send('ok');
-});
-router.get('/hello', function (req, res,next) {
-  // console.log('hello')
-  res.clearCookie('user', {id: 1,name: 'ruidoc'}, {maxAge: 900000});
-  res.send('ok');
-  // res.render('index', {title: 'Express'});
-});
-router.post('/date', function (req, res,next) {
-  // res.render('date', {title: 'Express'});
-})
-
-module.exports = router;
+  module.exports = router;

@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 // 首先引入 cookie-parser 这个模块
-// var cookieParser = require('cookie-parser');
+var cookieParser = require('cookie-parser');
 var session = require('express-session');
 // 引入路由
 var index = require('./routes/index');
@@ -24,9 +24,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(cookieParser('sessiontest'));
+// app.use(session({
+//   name:'UID',
+//   secret: 'sessiontest',//与cookieParser中的一致
+//   resave: true,
+//   saveUninitialized:true
+// }));
 // 跨域
 app.all('*',function (req, res, next) {
+  console.log(req.cookie);
   // console.log(req.headers.origin)
   // 判断origin是否在域名白名单列表中
   function isOriginAllowed(origin) {
