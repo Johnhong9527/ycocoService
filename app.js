@@ -35,7 +35,6 @@ app.use(session({
 }));
 // 跨域
 app.all('*',function (req, res, next) {
-  console.log(req.cookie);
   // console.log(req.headers.origin)
   // 判断origin是否在域名白名单列表中
   function isOriginAllowed(origin) {
@@ -63,7 +62,6 @@ app.all('*',function (req, res, next) {
   }
   else {
     next();
-    // res.send({ code: -2, msg: '非法请求' });
   }
 });
 
