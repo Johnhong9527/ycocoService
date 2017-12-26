@@ -27,8 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser('sessiontest'));
 app.use(session({
   name:'UID',
-  secret:'ycoco.xyz.',//与cookieParser中的一致
-  cookie:{'maxAge':90000},
+  secret:'ycoco.xyz.',//session签名与cookieParser中的签名一致
+  cookie:{'maxAge':1000*60*60*24*7}, // cookie保存一个礼拜
   secret: 'sessiontest',
   resave: true,
   saveUninitialized:true
@@ -51,7 +51,7 @@ app.all('*',function (req, res, next) {
     }
     return originS;
   }
-  console.log(req.session);
+  console.log(req.session.UID === undefined);
   // 跨域设置头部
   res.header('Access-Control-Allow-Origin', isOriginAllowed(req.headers.origin));
   // res.header('Access-Control-Allow-Origin', '*');

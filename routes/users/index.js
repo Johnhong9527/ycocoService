@@ -1,11 +1,22 @@
-var db = require('./mongodb');
+var db = require('./mongodb.js');
 var express = require('express');
 var URL = require('url');
 var router = express.Router();
+var signUp = false;
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('hello!');
+router.post('/', function(req, res, next) {
+  // 检测本机cookie 存储的用户信息是否一致，若一致，则默认用户登录
+  if(req.session.UID !== undefined){
+    db.find('user',{'name':req.session.UID.name,'password':req.session.UID.password}, result=> {
+      if(result === null){
+        res.send('error');
+      } else {
+        res.send('success');
+      }
+    })
+  }
+  // res.send('hello!');
 });
 router.get('/hello',(req,res,next)=>{
   console.log(11);
@@ -15,15 +26,23 @@ router.get('/hello',(req,res,next)=>{
 router.post('/sign-in',function (req,res,next) {
   // var params = URL.parse(req.url, true).query;
   // console.log(req.body.name);
-  db.find('user',{'name':req.body.name,'password':req.body.password},function(result){
-    if(result === null){
-      res.send('您填写的登录信息有误，请重新输入！');
-    } else {
-      // 这里应该是返回登录保存凭证，后期完善
-      req.session.UID = {name:req.body.name,password:req.body.password}
-      res.send('ok');
-    }
-  })
+  console.log(req.session.UID);
+  if(req.session.UID === undefined){
+    console.log(req.body.name);
+    db.find('user',{'name':req.body.name,'password':req.body.password},function(result){
+      if(result === null){
+        res.send('您填写的登录信息有误，请重新输入！');
+      } else {
+        // 这里应该是返回登录保存凭证，后期完善
+        req.session.UID = {name:req.body.name,password:req.body.password}
+        res.send('ok');
+      }
+    })
+  } else {
+    console.log(30);
+    console.log(req.session.UID)
+    res.send('该用户暂未登陆!');
+  }
 })
 // 注册查询：昵称是否重复
 router.post('/sign-up',function (req,res,next) {
