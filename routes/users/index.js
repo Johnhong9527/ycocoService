@@ -5,16 +5,21 @@ var router = express.Router();
 var signUp = false;
 
 /* GET users listing. */
-router.post('/', function(req, res, next) {
+router.all('/', function(req, res, next) {
   // 检测本机cookie 存储的用户信息是否一致，若一致，则默认用户登录
+  console.log(req.session.UID)
   if(req.session.UID !== undefined){
     db.find('user',{'name':req.session.UID.name,'password':req.session.UID.password}, result=> {
       if(result === null){
         res.send('error');
+        console.log('error');
       } else {
         res.send('success');
+        console.log('success');
       }
     })
+  } else {
+    res.send('no');
   }
   // res.send('hello!');
 });

@@ -6,8 +6,14 @@
 </template>
 
 <script>
+import userSuccess from './util'
 export default {
-  name: 'app'
+  name: 'app',
+  created(){
+    userSuccess(res=>{
+      console.log(res.data);
+    });
+  }
 }
 </script>
 
