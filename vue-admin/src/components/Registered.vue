@@ -28,6 +28,7 @@
 
 <script>
 import axios from 'axios'
+import _ from '@/config'
 export default {
   name: 'Registered',
   data(){
@@ -44,7 +45,7 @@ export default {
     // 登入
     signInBtn:function () {
       if(!(this.password === null || this.password.length <= 0)){
-        axios.post('/users/sign-in',{
+        axios.post(_.website + '/users/sign-in',{
           name:this.userName,
           password:this.password
         }).then(res =>{
@@ -63,7 +64,7 @@ export default {
     // 注册
     signUpBtn: function () {
       if(!(this.password === null || this.password.length <= 0)){
-        axios.post('/users/sign-up',{
+        axios.post(_.website + '/users/sign-up',{
           name:this.userName,
           password:this.password
         }).then(res =>{
@@ -78,14 +79,14 @@ export default {
       }
     },
     signOutBtn: function () {
-      axios.post('/users/sign-out').then(res=>{
+      axios.post(_.website + '/users/sign-out').then(res=>{
         console.log(res)
       })
     },
     // 更新数据
     updateBtn: function () {
       if(!(this.password === null || this.password.length <= 0 || this.newPassword === null)){
-        axios.post('/users/update',{
+        axios.post(_.website + '/users/update',{
           name:this.userName,
           password:this.password,
           newPassword: this.newPassword
@@ -102,7 +103,7 @@ export default {
     // 删除用户数据
     deleteBtn:function (){
       if(!(this.password === null || this.password.length <= 0)){
-        axios.post('/users/delete-user',{
+        axios.post(_.website + '/users/delete-user',{
           name:this.userName,
           password:this.password
         }).then(res=>{
@@ -116,12 +117,12 @@ export default {
       }
     },
     cookieAddBtn: function(){
-      axios.get('/api').then(res=>{
+      axios.get(_.website + '/api').then(res=>{
         console.log(res);
       })
     },
     cookieRemoveBtn: function () {
-      axios.get('/api/hello').then(res=>{
+      axios.get(_.website + '/api/hello').then(res=>{
         console.log(res);
       })
     }

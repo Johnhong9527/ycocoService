@@ -1,9 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
+// var cookieParser = require('cookie-parser');
 var router = express.Router();
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(cookieParser('ycoco.xyz.'));
+// router.use(bodyParser.urlencoded({ extended: false }));
+// router.use(cookieParser('ycoco.xyz.'));
 /* GET home page. */
 router.get('/', function (req, res, next) {
 

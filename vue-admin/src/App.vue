@@ -1,18 +1,24 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
+    <button type="button" name="button" @click='btnTest'>检测登录信息</button>
     <router-view/>
   </div>
 </template>
 
 <script>
-import userSuccess from './util'
+import {users} from './util'
+import axios from 'axios'
+import _ from '@/config'
 export default {
   name: 'app',
-  created(){
-    userSuccess(res=>{
-      console.log(res.data);
-    });
+  created(){},
+  methods:{
+    btnTest: function () {
+      users(res=>{
+        console.log(res);
+      })
+    }
   }
 }
 </script>

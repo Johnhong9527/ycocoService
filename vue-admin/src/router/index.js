@@ -15,10 +15,6 @@ export default new Router({
       path: '/HelloWorld',
       name: 'HelloWorld',
       component: HelloWorld
-    },{
-      path: '/Registered',
-      name: 'Registered',
-      component: Registered
     }
   ]
 })

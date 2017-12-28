@@ -12,7 +12,7 @@ var users = require('./routes/users');
 var api = require('./routes/api');
 
 var app = express();
-// app.use(cookieParser());
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,13 +26,35 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser('sessiontest'));
 app.use(session({
+  cookie:{
+    'maxAge':1000*60*60*24*7
+  }, // cookie保存一个礼拜
   name:'UID',
   secret:'ycoco.xyz.',//session签名与cookieParser中的签名一致
-  cookie:{'maxAge':1000*60*60*24*7}, // cookie保存一个礼拜
   secret: 'sessiontest',
   resave: true,
   saveUninitialized:true
 }));
+app.use(cookieParser('ycoco.xyz.'));
+/*
+{
+  cookie: {
+    path: String, // 将会影响响应头 Set-Cookie 中的 Path 字段
+    domain: String, // 将会影响响应头 Set-Cookie 中的 Domain字段
+    httpOnly: Boolean, // 设置为 true 使得客户端没法用 js 来操作该 cookie
+    expires: Date, // Date object 将会影响响应头 Set-cookie 中的 Expries 字段, 不推荐直接设置，一般设置 maxAge
+    maxAge: Number // 毫秒，将会影响响应头 Set-cookie 中的 Expries 字段，通过计算 server 当前时间和 maxAge 的和来计算 expires，
+    secure: Boolean // 将会影响响应头 Set-cookie 中的 Secure 字段，表示只有在请求使用SSL和HTTPS协议的时候才会被发送到服务器,
+    sameSite: Boolean || String, // 将会影响响应头 Set-cookie 中的 SameSite 字段，会影响跨域请求是否附带 Cookie 的行为
+  },
+  name: String, // 默认是 'connect-sid'，用于设置 cookie 的 key,
+  resave: Boolean, // 强制 session 每次都重新存储到 store 当中,
+  rolling: Boolean, // 每次请求都重新设置 cookie，并重置 max-age，也就意味着重置过期时间
+  saveUninitialized: Boolean, // 强制未初始化的 session 存储到 store 当中
+  secret: String, // 用于对 cookie 进行签名加密,
+  store: Object// 用来存储 session 的 store 实例，默认为 MemoryStore
+}
+*/
 // 跨域
 app.all('*',function (req, res, next) {
   // console.log(req.headers.origin)

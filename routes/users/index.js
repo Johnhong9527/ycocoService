@@ -1,13 +1,14 @@
 var db = require('./mongodb.js');
 var express = require('express');
 var URL = require('url');
+// var cookieParser = require('cookie-parser');
+// router.use(cookieParser('ycoco.xyz.'));
 var router = express.Router();
 var signUp = false;
-
 /* GET users listing. */
 router.all('/', function(req, res, next) {
   // 检测本机cookie 存储的用户信息是否一致，若一致，则默认用户登录
-  console.log(req.session.UID)
+  console.log(req.session)
   if(req.session.UID !== undefined){
     db.find('user',{'name':req.session.UID.name,'password':req.session.UID.password}, result=> {
       if(result === null){
@@ -21,17 +22,15 @@ router.all('/', function(req, res, next) {
   } else {
     res.send('no');
   }
-  // res.send('hello!');
 });
 router.get('/hello',(req,res,next)=>{
-  console.log(11);
   res.send('user hello!');
 })
 // 登录查询： 昵称和密码是否一致
 router.post('/sign-in',function (req,res,next) {
   // var params = URL.parse(req.url, true).query;
   // console.log(req.body.name);
-  console.log(req.session.UID);
+  console.log(req.session);
   if(req.session.UID === undefined){
     console.log(req.body.name);
     db.find('user',{'name':req.body.name,'password':req.body.password},function(result){
@@ -57,7 +56,7 @@ router.post('/sign-up',function (req,res,next) {
 })
 // 退出登录删除 cookie
 router.post('/sign-out',(req,res,next)=>{
-  req.session.destroy();
+  res.clearCookie('UID');
   res.send('success');
 })
 // 替换密码

@@ -1,7 +1,16 @@
 import axios from 'axios'
-export default (cb)=>{
-  // console.log('foo');
-  axios.post('/users').then(res=>{
+import _ from '@/config'
+
+export var users = function (cb) {
+  axios.post(_.website+'/users').then(res=>{
     cb(res);
   })
 }
+
+export default ({
+  users: function (cb) {
+    axios.post('/users').then(res=>{
+      cb(res);
+    })
+  }
+})
