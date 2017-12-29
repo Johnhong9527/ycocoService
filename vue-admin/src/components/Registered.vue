@@ -23,23 +23,33 @@
       <button type="button" name="button" @click='cookieAddBtn'>addCookie</button>
       <button type="button" name="button" @click='cookieRemoveBtn'>removeCookie</button>
     </div>
+    <hr>
+    <div class="">
+      {{msg}}
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import _ from '@/config'
+import bus from '@/assets/bus'
 export default {
   name: 'Registered',
   data(){
     return {
       userName:null,
       password:null,
-      newPassword:null
+      newPassword:null,
+      msg:null
     }
   },
   created(){
     // this.cookieAddBtn();
+    let that = this;
+    bus.$on('id-selected',function (id) {
+      that.msg = id
+    })
   },
   methods:{
     // 登入

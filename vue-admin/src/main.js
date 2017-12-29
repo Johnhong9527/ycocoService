@@ -6,6 +6,9 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+// 组件通信
+var bus = new Vue();
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
